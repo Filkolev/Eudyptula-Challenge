@@ -1,0 +1,101 @@
+Welcome to the Eudyptula Challenge!
+
+This "challenge" is a series of Linux kernel programming exercises
+starting out small, and in the end, if all goes well, you'll be the
+maintainer of a subsystem, if you so desire.  Well, maybe not a
+maintainer, but you will be qualified enough to point out any problems
+that your favorite maintainer is causing, and that's actually way more
+fun than being in charge.
+
+All of these tasks will be done through email, and will require you to
+write, modify, and submit Linux kernel patches and code of all different
+types.
+
+First off, some housekeeping rules.
+
+You have been assigned a "unique" id.  This id is required when
+submitting your results, as I (a dumb script) need some way to determine
+what is going on.  So, please, for every email you write to me from now
+on, use your id in the Subject: line like this:
+
+    [<id>] Task 02 results
+
+And yes, if you haven't guessed it already, "<id>" is your
+unique id.  Please don't lose it.  I can, through some difficulty,
+figure it out again, but we really don't want to have to get my human
+involved in this process, that only slows things down.
+
+You should be able to just hit "reply" on the task email and all should
+be fine, if not, the scripts will notify you.
+
+Always send submissions in from this email address, the one that you
+signed up with, emails from any other address will be silently
+discarded.  If you need to change email addresses in the future, just
+email me and tell me your existing id (<id>), your original
+email address, and your new email address, and it will be changed.
+
+When you submit a task, you will receive an autoresponse saying where
+you are in the queue.  If you do not receive this autoresponse, I have
+not received your task, something went wrong, and it needs to be resent.
+
+Secondly, no HTML email, or base64-mime attachments.  If you have made
+it this far, you have successfully sent a non-HTML email, which is
+wonderful (kids these days...), but for all tasks you can't send base64
+attachments, as I don't know what to do with them.  Just a "normal"
+attachment, in text form, is fine, and preferred.  If you have problems
+with this, please consult your email client's documentation on how to do
+this.
+
+Thirdly, don't use Gmail or Microsoft Exchange for this set of tasks.
+Yes, it can be done, but it's really hard, and you really have to know
+what you are doing.  If you get back "I can't understand this response,
+please try again" message, you might want to switch to a different email
+client / server and try it again, and notify me of your email address
+change.  Ah, now you see why you use an id and not an email address, we
+didn't just fall off of the turnip truck yesterday.
+
+Fourthly, this challenge is meant to be done over a period of time.
+Don't rush things, there's no hurry, I'm not going anywhere, and neither
+are you.  So sit back, take your time, and enjoy the process.  Life is
+about the journey, not the end result, as that's the same for everyone.
+
+Responses to submissions can sometimes take a few days, or weeks, or
+they can be a few minutes, depending on the load of the system.  There
+are many thousands of people currently taking this challenge and the
+scripts get easily backlogged at times.  If you ever feel that you
+missed an email, just ask, and research will be done to see what
+happened.  Sometimes new task emails do get delayed, but it should only
+be an hour or so, never more than a day to get a new task once you have
+completed one.  If you have not received a new task within a day of a
+task being marked as completed, please send a reminder email to find out
+what went wrong.
+
+Fifth, as stated on the challenge's home page, please do your work on
+your own.  A number of participants have, in the past, posted the
+answers to the tasks on github and other public code sites.  This
+instantly caused their solutions to be copied and submitted as answers
+from other people.  I'm sure you don't want to have others copy your
+hard work.  Doing these challenges does not mean you cannot research and
+try to find out how to do the tasks from existing kernel code and
+documentation.  You are expected to do that.  When you do copy code or
+scripts, please be sure to properly attribute where you copied it from,
+otherwise I am going to just assume you are trying to pass it off as
+your own work, which is not a good thing at all.
+
+If you are found to have posted your code publicly, or asked for help in
+public locations, or copied code from public locations without properly
+attributing it, or tried to cheat or fake challenge results in any way,
+you will be removed from the challenge instantly.  In short, do your own
+work, and keep it to yourself.
+
+Finally, if you have any questions about a task, or need help with
+something, feel free to ask.  I'll alert my human that something is
+going on, and they will get back to you in a few days with answers.
+
+Expect a follow-on email from this with your first task.  Responses to
+tasks might take a few days, depending on the load on my system, and any
+nasty bugs that show up.  Remember the fourth point again, you'll need
+to keep that in mind during this.
+
+As the Big Penguin says, "Have fun!"
+
