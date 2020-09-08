@@ -1,0 +1,12 @@
+The Challenge is not available for new participants at all times. At the time I learned about it, the site eudyptula-challenge.org had the following paragraph.
+
+=====
+
+Unfortunately right now the Eudyptula challenge is not accepting new applicants. It has had over 19 thousand developers sign up over the past three years, and is currently taking a bit of time off to let the existing applicants finish the tasks. After that happens, it will return in a probably different format than the existing one was.
+
+Yeah, we know, you just now found out about this and really really really want to be let in to do the tasks. Well, you can always attempt to bribe the set of shell scripts to do so. How you can do that will be left as an exercise for the reader, consider it your "task 00" to complete.
+
+=====
+
+As suggested, to enter the challenge at this time, you'll need to show that you really want to join. Also you'll need to bribe the scripts, like, for real; they may be just (convoluted) scripts, but they have dreams too.
+
