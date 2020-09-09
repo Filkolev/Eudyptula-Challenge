@@ -1,0 +1,104 @@
+The hello module is a basic skeleton which must implement the loading and
+unloading functions and define some module metadata using macros.
+
+The macros used are defined in include/linux/module.h
+
+The task requires the module to print at the debug level when loaded. After
+trying several methods to see the messages (writing to
+/proc/sys/kernel/printk and using `dmesg --console-level') I found this
+document: https://www.kernel.org/doc/local/pr_debug.txt
+
+The other interesting requirement is for the Makefile to be able to build
+the module either against a kernel source directory provided as an
+environment variable or against the running kernel.
+
+The relevant documentation is in Documentation/kbuild, with
+Documentation/kbuild/modules.rst containing pretty much all the
+information needed to complete this task.
+
+Further issues occurred when trying to submit the solution. It turned out
+that submitting the files in plain text was not easy with Gmail, so I turned
+to git. You can find some suggestions in Documentation/process/email-clients.rst.
+
+This resource was useful:
+https://nickdesaulniers.github.io/blog/2017/05/16/submitting-your-first-patch-to-the-linux-kernel-and-responding-to-feedback/
+
+In the post above was a section about using scripts/checkpatch.pl
+for style checks. Running it caused several warnings which I fixed:
+- missing SPDX License Identifier, see Documentation/process/license-rules.rst
+- replace spaces with tabs, see Documentation/process/coding-style.rst
+
+One warning was left about adding a new file and notifying the relevant
+maintainers, which I ignored since this isn't an actual submission for the
+kernel.
+
+The below is the results of testing the module on an Arch Linux machine.
+
+Verify ability to build against kernel sources provided via environment
+variable:
+[filip@arch ~/programming/Eudyptula-Challenge/Task-01]$ make
+KDIR=/home/filip/programming/linux/
+make -C /home/filip/programming/linux/
+M=/home/filip/programming/Eudyptula-Challenge/Task-01 modules
+make[1]: Entering directory '/home/filip/programming/linux'
+   CC [M] /home/filip/programming/Eudyptula-Challenge/Task-01/hello-module.o
+   MODPOST 1 modules
+   CC [M]
+/home/filip/programming/Eudyptula-Challenge/Task-01/hello-module.mod.o
+   LD [M]
+/home/filip/programming/Eudyptula-Challenge/Task-01/hello-module.ko
+make[1]: Leaving directory '/home/filip/programming/linux'
+[filip@arch ~/programming/Eudyptula-Challenge/Task-01]$ modinfo
+hello-module.ko
+filename:
+/home/filip/programming/Eudyptula-Challenge/Task-01/hello-module.ko
+description:    Task 01 of Eudyptula Challenge
+version:        1.0
+license:        GPL
+author:         Filip Kolev
+srcversion:     DD47D3D7BB68865240ECEA3
+depends:
+retpoline:      Y
+name:           hello_module
+vermagic:       5.7.0 SMP preempt mod_unload
+
+
+Verify building for currently running Linux:
+filip@arch ~/programming/Eudyptula-Challenge/Task-01]$ make
+make -C /lib/modules/5.8.7-arch1-1/build
+M=/home/filip/programming/Eudyptula-Challenge/Task-01 modules
+make[1]: Entering directory '/usr/lib/modules/5.8.7-arch1-1/build'
+   CC [M] /home/filip/programming/Eudyptula-Challenge/Task-01/hello-module.o
+   MODPOST
+/home/filip/programming/Eudyptula-Challenge/Task-01/Module.symvers
+   CC [M]
+/home/filip/programming/Eudyptula-Challenge/Task-01/hello-module.mod.o
+   LD [M]
+/home/filip/programming/Eudyptula-Challenge/Task-01/hello-module.ko
+make[1]: Leaving directory '/usr/lib/modules/5.8.7-arch1-1/build'
+[filip@arch ~/programming/Eudyptula-Challenge/Task-01]$ modinfo
+hello-module.ko
+filename:
+/home/filip/programming/Eudyptula-Challenge/Task-01/hello-module.ko
+description:    Task 01 of Eudyptula Challenge
+version:        1.0
+license:        GPL
+author:         Filip Kolev
+srcversion:     DD47D3D7BB68865240ECEA3
+depends:
+retpoline:      Y
+name:           hello_module
+vermagic:       5.8.7-arch1-1 SMP preempt mod_unload
+
+
+Verify loading and unloading:
+[filip@arch ~/programming/Eudyptula-Challenge/Task-01]$ sudo dmesg -C
+[filip@arch ~/programming/Eudyptula-Challenge/Task-01]$ sudo insmod
+hello-module.ko
+[filip@arch ~/programming/Eudyptula-Challenge/Task-01]$ dmesg --level debug
+[ 3043.941980] Hello World!
+[filip@arch ~/programming/Eudyptula-Challenge/Task-01]$ sudo rmmod
+hello_module
+[filip@arch ~/programming/Eudyptula-Challenge/Task-01]$ dmesg --level debug
+[ 3043.941980] Hello World!
+[ 3053.745834] Goodbye Cruel World!
