@@ -18,8 +18,25 @@ information needed to complete this task.
 
 Further issues occurred when trying to submit the solution. It turned out
 that submitting the files in plain text was not easy with Gmail, so I turned
-to git. You can find some suggestions in
+to git send-email. You can find some suggestions in
 Documentation/process/email-clients.rst.
+
+However, the first task requires the files for the solution to be sent as
+attachments, not as a patch, so a bit more work was needed.
+In the end, I used Thunderbird, selected the plain text option and in order to
+force the attachment encoding not to be base64, I had to change the text
+encoding to Western.
+Weird, but it worked, examining the message source showed
+Content-Transfer-Encoding: 7bit, whereas in the previous attempts it would be
+Content-Transfer-Encoding: base64.
+
+This thread had the magic command to achieve it:
+https://superuser.com/questions/766269/how-to-change-content-transfer-encoding-for-email-attachments
+Although in my case it was easier, probably the Thunderbird interface has
+changed since - when composing the message, select
+Options -> Text Encoding -> Western.
+Previously, I disabled HTML via Account Settings -> Composition & Addressing,
+deselecting the checkbox "Compose messages in HTML format".
 
 This resource was useful:
 https://nickdesaulniers.github.io/blog/2017/05/16/submitting-your-first-patch-to-the-linux-kernel-and-responding-to-feedback/
