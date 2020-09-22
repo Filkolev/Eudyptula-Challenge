@@ -1,0 +1,52 @@
+This task is relatively easy for people who already have experience building
+a Linux kernel. It did, however, present some new challenges as I have never
+booted a custom-built kernel on any of my machines.
+
+The task description is very helpful in explaining what needs to be done and
+what needs to be taken care of. The most comprehensive source I used is from
+the Arch community:
+https://wiki.archlinux.org/index.php/Kernel/Traditional_compilation
+
+As described, I followed these steps:
+1. Clone the kernel repository
+2. Configure the kernel using the currently running kernel configuration
+3. Create a swap file (details below on why I had to do this)
+4. Build the kernel, natively on the machine that would run it
+5. Install the kernel
+6. Configure GRUB
+7. Verify running kernel
+
+The laptop I use for these tasks is an old IBM Thinkpad (yes, IBM), it has
+2 GB of RAM and a dual-core processor. During compilation one of the scripts
+would fail, as it was being killed by the oom killer.
+The first attempts to resolve this were: close everything else besides the
+terminal window, then also stop gdm (Gnome display manager) and run from the
+console. It did not help, so I looked for other solutions and I found this:
+https://www.programmersought.com/article/68464560932/
+The steps walk through the creation of a swapfile. This helped and now I had a
+properly built kernel.
+
+Installing the kernel basically consists of 3 steps:
+- install the modules in /usr/lib/modules
+- install the compressed kernel image in /boot
+- create an initial ramdisk in /boot
+
+The final step before trying out the kernel is configuring GRUB to list it in
+the startup menu. I did not do anything special here, just ran the command to
+re-generate the configuration automatically based on the contents of the /boot
+directory which now contained the new kernel and initial ramdisk.
+
+An additional problem was the Nvidia driver I use on this laptop. It is built
+from an AUR repository (Arch User Repository). Since Arch is a bleeding-edge
+distro, it frequently updates the kernel and usually with major releases the
+driver needs to be patched. Without investigating whether that was the case,
+I tried reinstalling the driver and it failed to install for the custom kernel.
+Therefore, verification was done without a graphical environment.
+
+Verification itself can be done in several ways, I ran these 3 commands:
+- uname -a
+- cat /proc/version
+- dmesg | head -3
+
+All of the above show the version of the currently running kernel, which in my
+case was 5.9.0-rc6-gbeaeb4f39.
