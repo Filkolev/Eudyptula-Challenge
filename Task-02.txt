@@ -39,6 +39,6 @@ umbrella, it deserves better than that.
 Remember to use your ID assigned in the subject line when responding to
 this task, so that I can figure out who to attribute it to.
 
-If you forgot, your id is "4b77379b10af".  But why do I repeat myself?
+If you forgot, your id is "<id>".  But why do I repeat myself?
 Of course you know your id, you made it through the first task just fine
 with it.
