@@ -1,0 +1,6 @@
+Having already explored git format-patch and git send-email for task 01,
+completing this one was a breeze. I just modified the Makefile as instructed,
+created a patch and emailed it. Proof of booting the kernel was the
+output of `cat /proc/version' within the commit message of the patch.
+Since the change is trivial, there is not much else to take into account.
+As for the first task, I checked the patch using scripts/checkpatch.pl.
