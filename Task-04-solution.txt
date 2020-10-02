@@ -1,0 +1,10 @@
+This task is all about code style. Since I've read the style guide before,
+I skipped straight to the tools used. I mean, come on, you don't expect people
+to go through the code line by line, right?
+
+The actual location of the guide is: Documentation\process\coding-style.rst
+I used clang-format: Documentation\process\clang-format.rst
+
+I was already aware of the checkpatch.pl script since Task 01, I ran it again.
+Besides code style, it also checks other interesting things like imports 
+(it suggests changing an import), usage of higher-level functions, etc.
