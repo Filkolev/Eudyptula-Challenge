@@ -1,0 +1,20 @@
+The files I examined for this task:
+- Documentation/driver-api/usb/hotplug.rst
+- include/linux/usb.h
+- include/uapi/linux/hid.h
+- include/linux/hid.h
+- include/linux/mod_devicetable.h
+- drivers/hid/usbhid/usbkbd.c
+
+The last one, usbkbd.c, was the most useful as I practically copied over the 
+necessary parts, modifying variable and function names.
+
+Building and installing the module was more involved. I had to generate a
+signing key, following Documentation/admin-guide/module-signing.rst and a
+Stackoverflow post.
+
+With this implementation, I got a response that the struct usb_driver 
+structure was not needed, hence, there was no requirement for the driver to 
+register itself with the USB subsystem. I pretty much removed most of the code, 
+and brought back the init and exit functions (which were not implemented in the 
+previous version).
