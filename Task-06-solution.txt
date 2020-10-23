@@ -1,0 +1,10 @@
+For this task I looked first in Documentation/driver-api/misc_devices.rst,
+then to the file this points to, drivers/char/misc.c. This includes
+include/linux/miscdevice.h where I found useful macros. I searched the
+repository for users of one of the macros and found several examples of
+how to setup the driver.
+
+The final problem was properly defining the write and read functions. Found
+a suggestion online to use helper functions which simplify the task as they
+perform various checks and modify the appropriate pointers. The issue was
+infinite read when testing with `cat'.
