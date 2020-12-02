@@ -1,0 +1,11 @@
+For this task I basically followed the same steps as for Task 02, except
+I skipped the `make localmodconfig' part and I found out why it was
+specifically mentioned before.
+I pulled linux-next snapshot for October 23 from the linux-next repository and
+also added the linux-next tree as a remote to my Linux repository.
+
+What is linux-next is described in the book Documentation/process.
+
+Verify running kernel:
+[filip@arch ~]$ cat /proc/version
+Linux version 5.9.0-next-20201023 (filip@arch) (gcc (GCC) 10.2.0, GNU ld (GNU Binutils) 2.35.1) #3 SMP PREEMPT Sun Oct 25 09:06:24 EET 2020
