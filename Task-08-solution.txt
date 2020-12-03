@@ -1,0 +1,53 @@
+The solution is not yet reviewed and may need rework.
+
+As usual, the first place to look is in the docs. I referred to
+Documentation/filesystems/debugfs.rst which provides the basic information
+needed to create directories and files under /sys/kernel/debug/.
+
+By default, the debug directory allows access only to root; to fix that, as
+required by the task, I put an entry in /etc/fstab where I provided the mode
+(0755) using a mount option.
+
+The next step was to look at include/linux/debugfs.h which defines the
+functions to use and some useful macros. I also searched for users of those
+functions/macros to get a better idea of how they are used throughout the
+kernel.
+
+The first task is pretty straight-forward as it uses essentially the same
+file operations as Task 06. One thing I added was marking the file as being in
+use while reading or writing.
+To check the return values of the functions which return pointers, there are
+macros defined in include/linux/err.h.
+
+The second task is easy. The jiffies can be obtained using a function from
+include/linux/jiffies.h. For such a file which only returns a single number,
+debugfs.h has a macro DEFINE_DEBUGFS_ATTRIBUTE which greatly simplifies things.
+
+The third task is equivalent to the first, but we're using a buffer which is
+also writeable (I decided to use a static char array). The complication is the
+need to use locking. Several documents contain information about the locks
+available in the kernel, this is the one I found most useful:
+Documentation/locking/locktypes.rst, along with the other files in the same
+directory.
+At first I used a rwlock, but the read operation failed consistently at the
+point when copy_to_user() is called. A little research showed that this type of
+lock is not appropriate for this context, because it is an optimized version of
+a spinlock:
+https://stackoverflow.com/questions/37449712/what-happens-if-copy-to-user-is-in-rw-lock
+I changed this to a rw_semaphore and the error disappeared.
+
+As usual with all submissions, I used clang-format with the config file in the
+Linux source tree and checkpatch.pl to verify both the files and patches.
+
+TODO: Add verification steps
+
+The final step was to figure out how to send the solution as described.
+The initial version (step 1) I sent as a regular email with the source and
+Makefile attached.
+For the patch subjects I used a clever trick described here:
+https://stackoverflow.com/questions/36185647/git-multiple-subject-prefix-with-format-patch
+
+I used several options to git send-email to achieve the desired structure.
+First, I used --in-reply-to, using the ID of the first email, then added
+--thread and --chain-reply-to (as this was given as the preferred option in the
+task description).
