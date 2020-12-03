@@ -39,7 +39,67 @@ I changed this to a rw_semaphore and the error disappeared.
 As usual with all submissions, I used clang-format with the config file in the
 Linux source tree and checkpatch.pl to verify both the files and patches.
 
-TODO: Add verification steps
+Verify debugfs is accessible by all users:
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ ls -ld /sys/kernel/debug/
+drwxr-xr-x 38 root root 0 Dec  3 11:09 /sys/kernel/debug/
+
+Load module and verify files are created with correct permissions:
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ sudo insmod hello-debugfs-module.ko
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ ls -l /sys/kernel/debug/eudyptula/
+total 0
+-rw-r--r-- 1 root root 0 Dec  3 11:23 foo
+-rw-rw-rw- 1 root root 0 Dec  3 11:14 id
+-r--r--r-- 1 root root 0 Dec  3 11:13 jiffies
+
+Verify id:
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ cat /sys/kernel/debug/eudyptula/id
+4b77379b10af
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ echo asdf > /sys/kernel/debug/eudyptula/id
+
+bash: echo: write error: Invalid argument
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ echo 4b77379b10af > /sys/kernel/debug/eudyptula/id
+bash: echo: write error: Invalid argument
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ echo -n 4b77379b10af > /sys/kernel/debug/eudyptula/id
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ echo $?
+0
+
+Verify jiffies:
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ cat /sys/kernel/debug/eudyptula/jiffies
+4295497585
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ cat /sys/kernel/debug/eudyptula/jiffies
+4295498380
+
+Verify foo:
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ cat /sys/kernel/debug/eudyptula/foo
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ echo asdf > /sys/kernel/debug/eudyptula/foo
+bash: /sys/kernel/debug/eudyptula/foo: Permission denied
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ echo asdf | sudo tee /sys/kernel/debug/eudyptula/foo
+asdf
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ cat /sys/kernel/debug/eudyptula/foo
+asdf
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ wc test.txt
+   1    1 4096 test.txt
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ cat test.txt | sudo tee /sys/kernel/debug/eudyptula/foo
+# file contains 4096 times the symbol 'a'
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ cat /sys/kernel/debug/eudyptula/foo
+# repeated 'a'
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ cat /sys/kernel/debug/eudyptula/foo | wc
+      1       1    4096
+
+Executing as root to write directly to file; tee enters infinite loop:
+[root@arch Task-08]# wc test.txt
+   1    1 4097 test.txt
+[root@arch Task-08]# cat test.txt > /sys/kernel/debug/eudyptula/foo
+cat: write error: No space left on device
+[root@arch Task-08]# cat /sys/kernel/debug/eudyptula/foo
+# repeated 'a'
+[root@arch Task-08]# cat /sys/kernel/debug/eudyptula/foo | wc
+      0       1    4096
+
+Unload module:
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ sudo rmmod hello_debugfs_module
+[filip@arch ~/programming/Eudyptula-Challenge/Task-08]$ ls /sys/kernel/debug/eudyptula
+ls: cannot access '/sys/kernel/debug/eudyptula': No such file or directory
 
 The final step was to figure out how to send the solution as described.
 The initial version (step 1) I sent as a regular email with the source and
