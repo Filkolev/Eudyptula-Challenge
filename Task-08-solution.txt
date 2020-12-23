@@ -1,5 +1,3 @@
-The solution is not yet reviewed and may need rework.
-
 As usual, the first place to look is in the docs. I referred to
 Documentation/filesystems/debugfs.rst which provides the basic information
 needed to create directories and files under /sys/kernel/debug/.
