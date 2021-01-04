@@ -1,0 +1,21 @@
+In this task, debugfs APIs need to be replaced with sysfs.
+
+These are the documents I looked at:
+- https://www.kernel.org/doc/html/latest/filesystems/sysfs.html
+- https://www.kernel.org/doc/html/latest/core-api/kobject.html
+
+The relevant headers are:
+- include/linux/sysfs.h
+- include/linux/device.h
+
+Also useful are these examples:
+- samples/kobject/kobject-example.c
+- samples/kobject/kset-example.c
+
+In short, there are macros that can be used to define the sysfs attributes 
+with correct permissions given proper naming of the show and store functions.
+There are also macros to help with defining attribute groups. Used with a 
+function to add sysfs groups, everything is accomplished with a few lines of 
+code.
+
+The rest of the code is largely unchanged from Task 08.
